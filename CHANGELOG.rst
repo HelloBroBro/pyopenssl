@@ -4,7 +4,7 @@ Changelog
 Versions are year-based with a strict backward-compatibility policy.
 The third digit is only for regressions.
 
-24.2.0 (UNRELEASED)
+24.2.1 (2024-07-20)
 -------------------
 
 Backward-incompatible changes:
@@ -13,7 +13,22 @@ Backward-incompatible changes:
 Deprecations:
 ^^^^^^^^^^^^^
 
-- Deprecated ``OpenSSL.crypto.X509Req``, ``OpenSSL.crypto.load_certificate_request``, ``OpenSSL.crypto.dump_certificate_request``. Instead, :class:`cryptography.x509.CertificateSigningRequest`, :class:`cryptography.x509.CertificateSigningRequestBuilder`, :func:`cryptography.x509.load_der_x509_csr`, or :func:`cryptography.x509.load_pem_x509_csr` should be used.
+Changes:
+^^^^^^^^
+
+- Fixed changelog to remove sphinx specific restructured text strings.
+
+
+24.2.0 (2024-07-20)
+-------------------
+
+Backward-incompatible changes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deprecations:
+^^^^^^^^^^^^^
+
+- Deprecated ``OpenSSL.crypto.X509Req``, ``OpenSSL.crypto.load_certificate_request``, ``OpenSSL.crypto.dump_certificate_request``. Instead, ``cryptography.x509.CertificateSigningRequest``, ``cryptography.x509.CertificateSigningRequestBuilder``, ``cryptography.x509.load_der_x509_csr``, or ``cryptography.x509.load_pem_x509_csr`` should be used.
 
 Changes:
 ^^^^^^^^
