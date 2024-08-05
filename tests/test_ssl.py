@@ -598,18 +598,9 @@ class TestContext:
         `SSLv3_METHOD`, `SSLv23_METHOD`, `TLSv1_METHOD`, `TLSv1_1_METHOD`,
         or `TLSv1_2_METHOD`.
         """
-        methods = [SSLv23_METHOD, TLSv1_METHOD]
+        methods = [SSLv23_METHOD, TLSv1_METHOD, TLSv1_1_METHOD, TLSv1_2_METHOD]
         for meth in methods:
             Context(meth)
-
-        maybe = [TLSv1_1_METHOD, TLSv1_2_METHOD]
-        for meth in maybe:
-            try:
-                Context(meth)
-            except (Error, ValueError):
-                # Some versions of OpenSSL have SSLv2 / TLSv1.1 / TLSv1.2, some
-                # don't.  Difficult to say in advance.
-                pass
 
         with pytest.raises(TypeError):
             Context("")
@@ -1790,8 +1781,7 @@ class TestServerNameCallback:
         callback = tracker()
         if callback is not None:
             referrers = get_referrers(callback)
-            if len(referrers) > 1:  # pragma: nocover
-                pytest.fail(f"Some references remain: {referrers!r}")
+            assert len(referrers) == 1
 
     def test_no_servername(self):
         """
@@ -2208,6 +2198,9 @@ class TestContextConnection:
         ctx_or_conn.use_certificate(
             load_certificate(FILETYPE_PEM, root_cert_pem)
         )
+        ctx_or_conn.use_certificate(
+            load_certificate(FILETYPE_PEM, root_cert_pem).to_cryptography()
+        )
 
     def test_use_certificate_wrong_args(self, ctx_or_conn):
         """
@@ -2583,7 +2576,7 @@ class TestConnection:
         serverContext.use_privatekey(skey)
         serverContext.use_certificate(scert)
         serverContext.add_extra_chain_cert(icert)
-        serverContext.add_extra_chain_cert(cacert)
+        serverContext.add_extra_chain_cert(cacert.to_cryptography())
         server = Connection(serverContext, None)
         server.set_accept_state()
 
@@ -2627,7 +2620,7 @@ class TestConnection:
         serverContext = Context(SSLv23_METHOD)
         serverContext.use_privatekey(skey)
         serverContext.use_certificate(scert)
-        serverContext.add_extra_chain_cert(icert)
+        serverContext.add_extra_chain_cert(icert.to_cryptography())
         serverContext.add_extra_chain_cert(cacert)
         server = Connection(serverContext, None)
         server.set_accept_state()
@@ -2716,8 +2709,7 @@ class TestConnection:
         callback = tracker()
         if callback is not None:  # pragma: nocover
             referrers = get_referrers(callback)
-            if len(referrers) > 1:
-                pytest.fail(f"Some references remain: {referrers!r}")
+            assert len(referrers) == 1
 
     def test_get_session_unconnected(self):
         """
@@ -4503,15 +4495,9 @@ class TestDTLS:
 
         # Check that the MTU set/query functions are doing *something*
         c.set_ciphertext_mtu(1000)
-        try:
-            assert 500 < c.get_cleartext_mtu() < 1000
-        except NotImplementedError:  # OpenSSL 1.1.0 and earlier
-            pass
+        assert 500 < c.get_cleartext_mtu() < 1000
         c.set_ciphertext_mtu(500)
-        try:
-            assert 0 < c.get_cleartext_mtu() < 500
-        except NotImplementedError:  # OpenSSL 1.1.0 and earlier
-            pass
+        assert 0 < c.get_cleartext_mtu() < 500
 
     def test_it_works_at_all(self):
         self._test_handshake_and_data(srtp_profile=None)

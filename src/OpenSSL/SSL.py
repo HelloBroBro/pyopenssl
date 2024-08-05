@@ -11,6 +11,7 @@ from sys import platform
 from typing import Any, Callable, List, Optional, Sequence, TypeVar
 from weakref import WeakValueDictionary
 
+from cryptography import x509
 from cryptography.hazmat.primitives.asymmetric import ec
 
 from OpenSSL._util import (
@@ -1126,7 +1127,7 @@ class Context:
         if not use_result:
             _raise_current_error()
 
-    def use_certificate(self, cert: X509) -> None:
+    def use_certificate(self, cert: X509 | x509.Certificate) -> None:
         """
         Load a certificate from a X509 object
 
@@ -1135,13 +1136,22 @@ class Context:
         """
         # Mirrored at Connection.use_certificate
         if not isinstance(cert, X509):
-            raise TypeError("cert must be an X509 instance")
+            cert = X509.from_cryptography(cert)
+        else:
+            warnings.warn(
+                (
+                    "Passing pyOpenSSL X509 objects is deprecated. You "
+                    "should use a cryptography.x509.Certificate instead."
+                ),
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         use_result = _lib.SSL_CTX_use_certificate(self._context, cert._x509)
         if not use_result:
             _raise_current_error()
 
-    def add_extra_chain_cert(self, certobj: X509) -> None:
+    def add_extra_chain_cert(self, certobj: X509 | x509.Certificate) -> None:
         """
         Add certificate to chain
 
@@ -1149,7 +1159,16 @@ class Context:
         :return: None
         """
         if not isinstance(certobj, X509):
-            raise TypeError("certobj must be an X509 instance")
+            certobj = X509.from_cryptography(certobj)
+        else:
+            warnings.warn(
+                (
+                    "Passing pyOpenSSL X509 objects is deprecated. You "
+                    "should use a cryptography.x509.Certificate instead."
+                ),
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         copy = _lib.X509_dup(certobj._x509)
         add_result = _lib.SSL_CTX_add_extra_chain_cert(self._context, copy)
@@ -2017,7 +2036,7 @@ class Connection:
         """
         return _lib.SSL_get_verify_mode(self._ssl)
 
-    def use_certificate(self, cert: X509) -> None:
+    def use_certificate(self, cert: X509 | x509.Certificate) -> None:
         """
         Load a certificate from a X509 object
 
@@ -2026,7 +2045,16 @@ class Connection:
         """
         # Mirrored from Context.use_certificate
         if not isinstance(cert, X509):
-            raise TypeError("cert must be an X509 instance")
+            cert = X509.from_cryptography(cert)
+        else:
+            warnings.warn(
+                (
+                    "Passing pyOpenSSL X509 objects is deprecated. You "
+                    "should use a cryptography.x509.Certificate instead."
+                ),
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         use_result = _lib.SSL_use_certificate(self._ssl, cert._x509)
         if not use_result:
