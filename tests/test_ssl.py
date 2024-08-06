@@ -101,7 +101,6 @@ from OpenSSL.SSL import (
     SSLEAY_DIR,
     SSLEAY_PLATFORM,
     SSLEAY_VERSION,
-    TLS1_1_VERSION,
     TLS1_2_VERSION,
     TLS1_3_VERSION,
     TLS_METHOD,
@@ -136,11 +135,6 @@ try:
     )
 except ImportError:
     SSL_ST_INIT = SSL_ST_BEFORE = SSL_ST_OK = SSL_ST_RENEGOTIATE = None
-
-try:
-    from OpenSSL.SSL import OP_NO_TLSv1_3
-except ImportError:
-    OP_NO_TLSv1_3 = None
 
 from .test_crypto import (
     client_cert_pem,
@@ -1007,12 +1001,8 @@ class TestContext:
         assert all(b"CLIENT_RANDOM" in line for conn, line in called)
 
     def test_set_proto_version(self):
-        if OP_NO_TLSv1_3 is None:
-            high_version = TLS1_2_VERSION
-            low_version = TLS1_1_VERSION
-        else:
-            high_version = TLS1_3_VERSION
-            low_version = TLS1_2_VERSION
+        high_version = TLS1_3_VERSION
+        low_version = TLS1_2_VERSION
 
         server_context = Context(TLS_METHOD)
         server_context.use_certificate(
@@ -3932,7 +3922,7 @@ class TestMemoryBIO:
 
         def multiple_ca(ctx):
             ctx.add_client_ca(cacert)
-            ctx.add_client_ca(secert)
+            ctx.add_client_ca(secert.to_cryptography())
             return [cadesc, sedesc]
 
         self._check_client_ca_list(multiple_ca)
@@ -3972,7 +3962,7 @@ class TestMemoryBIO:
         sedesc = secert.get_subject()
 
         def set_replaces_add_ca(ctx):
-            ctx.add_client_ca(clcert)
+            ctx.add_client_ca(clcert.to_cryptography())
             ctx.set_client_ca_list([cadesc])
             ctx.add_client_ca(secert)
             return [cadesc, sedesc]

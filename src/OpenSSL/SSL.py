@@ -82,6 +82,7 @@ __all__ = [
     "OP_NO_TLSv1",
     "OP_NO_TLSv1_1",
     "OP_NO_TLSv1_2",
+    "OP_NO_TLSv1_3",
     "MODE_RELEASE_BUFFERS",
     "OP_SINGLE_DH_USE",
     "OP_SINGLE_ECDH_USE",
@@ -188,11 +189,7 @@ OP_NO_SSLv3: int = _lib.SSL_OP_NO_SSLv3
 OP_NO_TLSv1: int = _lib.SSL_OP_NO_TLSv1
 OP_NO_TLSv1_1: int = _lib.SSL_OP_NO_TLSv1_1
 OP_NO_TLSv1_2: int = _lib.SSL_OP_NO_TLSv1_2
-try:
-    OP_NO_TLSv1_3: int = _lib.SSL_OP_NO_TLSv1_3
-    __all__.append("OP_NO_TLSv1_3")
-except AttributeError:
-    pass
+OP_NO_TLSv1_3: int = _lib.SSL_OP_NO_TLSv1_3
 
 MODE_RELEASE_BUFFERS: int = _lib.SSL_MODE_RELEASE_BUFFERS
 
@@ -1495,7 +1492,9 @@ class Context:
 
         _lib.SSL_CTX_set_client_CA_list(self._context, name_stack)
 
-    def add_client_ca(self, certificate_authority: X509) -> None:
+    def add_client_ca(
+        self, certificate_authority: X509 | x509.Certificate
+    ) -> None:
         """
         Add the CA certificate to the list of preferred signers for this
         context.
@@ -1509,7 +1508,18 @@ class Context:
         .. versionadded:: 0.10
         """
         if not isinstance(certificate_authority, X509):
-            raise TypeError("certificate_authority must be an X509 instance")
+            certificate_authority = X509.from_cryptography(
+                certificate_authority
+            )
+        else:
+            warnings.warn(
+                (
+                    "Passing pyOpenSSL X509 objects is deprecated. You "
+                    "should use a cryptography.x509.Certificate instead."
+                ),
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
         add_result = _lib.SSL_CTX_add_client_CA(
             self._context, certificate_authority._x509
