@@ -1073,6 +1073,14 @@ class TestContext:
         cert = clientSSL.get_peer_certificate()
         assert cert.get_subject().CN == "Testing Root CA"
 
+        cryptography_cert = clientSSL.get_peer_certificate(
+            as_cryptography=True
+        )
+        assert (
+            cryptography_cert.subject.rfc4514_string()
+            == "CN=Testing Root CA,O=Testing,L=Chicago,ST=IL,C=US"
+        )
+
     def _load_verify_cafile(self, cafile):
         """
         Verify that if path to a file containing a certificate is passed to
@@ -2555,6 +2563,13 @@ class TestConnection:
         cert = client.get_certificate()
         assert cert is not None
         assert "Server Certificate" == cert.get_subject().CN
+
+        cryptography_cert = client.get_certificate(as_cryptography=True)
+        assert cryptography_cert is not None
+        assert (
+            cryptography_cert.subject.rfc4514_string()
+            == "CN=Server Certificate"
+        )
 
     def test_get_certificate_none(self):
         """
