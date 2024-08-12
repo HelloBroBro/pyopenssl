@@ -50,105 +50,105 @@ from OpenSSL.crypto import (
 )
 
 __all__ = [
-    "OPENSSL_VERSION_NUMBER",
-    "SSLEAY_VERSION",
-    "SSLEAY_CFLAGS",
-    "SSLEAY_PLATFORM",
-    "SSLEAY_DIR",
-    "SSLEAY_BUILT_ON",
-    "OPENSSL_VERSION",
-    "OPENSSL_CFLAGS",
-    "OPENSSL_PLATFORM",
-    "OPENSSL_DIR",
-    "OPENSSL_BUILT_ON",
-    "SENT_SHUTDOWN",
-    "RECEIVED_SHUTDOWN",
-    "SSLv23_METHOD",
-    "TLSv1_METHOD",
-    "TLSv1_1_METHOD",
-    "TLSv1_2_METHOD",
-    "TLS_METHOD",
-    "TLS_SERVER_METHOD",
-    "TLS_CLIENT_METHOD",
+    "DTLS_CLIENT_METHOD",
     "DTLS_METHOD",
     "DTLS_SERVER_METHOD",
-    "DTLS_CLIENT_METHOD",
+    "MODE_RELEASE_BUFFERS",
+    "NO_OVERLAPPING_PROTOCOLS",
+    "OPENSSL_BUILT_ON",
+    "OPENSSL_CFLAGS",
+    "OPENSSL_DIR",
+    "OPENSSL_PLATFORM",
+    "OPENSSL_VERSION",
+    "OPENSSL_VERSION_NUMBER",
+    "OP_ALL",
+    "OP_CIPHER_SERVER_PREFERENCE",
+    "OP_COOKIE_EXCHANGE",
+    "OP_DONT_INSERT_EMPTY_FRAGMENTS",
+    "OP_EPHEMERAL_RSA",
+    "OP_MICROSOFT_BIG_SSLV3_BUFFER",
+    "OP_MICROSOFT_SESS_ID_BUG",
+    "OP_MSIE_SSLV2_RSA_PADDING",
+    "OP_NETSCAPE_CA_DN_BUG",
+    "OP_NETSCAPE_CHALLENGE_BUG",
+    "OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG",
+    "OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG",
+    "OP_NO_COMPRESSION",
+    "OP_NO_QUERY_MTU",
+    "OP_NO_TICKET",
+    "OP_PKCS1_CHECK_1",
+    "OP_PKCS1_CHECK_2",
+    "OP_SINGLE_DH_USE",
+    "OP_SINGLE_ECDH_USE",
+    "OP_SSLEAY_080_CLIENT_DH_BUG",
+    "OP_SSLREF2_REUSE_CERT_TYPE_BUG",
+    "OP_TLS_BLOCK_PADDING_BUG",
+    "OP_TLS_D5_BUG",
+    "OP_TLS_ROLLBACK_BUG",
+    "RECEIVED_SHUTDOWN",
+    "SENT_SHUTDOWN",
+    "SESS_CACHE_BOTH",
+    "SESS_CACHE_CLIENT",
+    "SESS_CACHE_NO_AUTO_CLEAR",
+    "SESS_CACHE_NO_INTERNAL",
+    "SESS_CACHE_NO_INTERNAL_LOOKUP",
+    "SESS_CACHE_NO_INTERNAL_STORE",
+    "SESS_CACHE_OFF",
+    "SESS_CACHE_SERVER",
     "SSL3_VERSION",
-    "TLS1_VERSION",
+    "SSLEAY_BUILT_ON",
+    "SSLEAY_CFLAGS",
+    "SSLEAY_DIR",
+    "SSLEAY_PLATFORM",
+    "SSLEAY_VERSION",
+    "SSL_CB_ACCEPT_EXIT",
+    "SSL_CB_ACCEPT_LOOP",
+    "SSL_CB_ALERT",
+    "SSL_CB_CONNECT_EXIT",
+    "SSL_CB_CONNECT_LOOP",
+    "SSL_CB_EXIT",
+    "SSL_CB_HANDSHAKE_DONE",
+    "SSL_CB_HANDSHAKE_START",
+    "SSL_CB_LOOP",
+    "SSL_CB_READ",
+    "SSL_CB_READ_ALERT",
+    "SSL_CB_WRITE",
+    "SSL_CB_WRITE_ALERT",
+    "SSL_ST_ACCEPT",
+    "SSL_ST_CONNECT",
+    "SSL_ST_MASK",
     "TLS1_1_VERSION",
     "TLS1_2_VERSION",
     "TLS1_3_VERSION",
+    "TLS1_VERSION",
+    "TLS_CLIENT_METHOD",
+    "TLS_METHOD",
+    "TLS_SERVER_METHOD",
+    "VERIFY_CLIENT_ONCE",
+    "VERIFY_FAIL_IF_NO_PEER_CERT",
+    "VERIFY_NONE",
+    "VERIFY_PEER",
+    "Connection",
+    "Context",
+    "Error",
     "OP_NO_SSLv2",
     "OP_NO_SSLv3",
     "OP_NO_TLSv1",
     "OP_NO_TLSv1_1",
     "OP_NO_TLSv1_2",
     "OP_NO_TLSv1_3",
-    "MODE_RELEASE_BUFFERS",
-    "OP_SINGLE_DH_USE",
-    "OP_SINGLE_ECDH_USE",
-    "OP_EPHEMERAL_RSA",
-    "OP_MICROSOFT_SESS_ID_BUG",
-    "OP_NETSCAPE_CHALLENGE_BUG",
-    "OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG",
-    "OP_SSLREF2_REUSE_CERT_TYPE_BUG",
-    "OP_MICROSOFT_BIG_SSLV3_BUFFER",
-    "OP_MSIE_SSLV2_RSA_PADDING",
-    "OP_SSLEAY_080_CLIENT_DH_BUG",
-    "OP_TLS_D5_BUG",
-    "OP_TLS_BLOCK_PADDING_BUG",
-    "OP_DONT_INSERT_EMPTY_FRAGMENTS",
-    "OP_CIPHER_SERVER_PREFERENCE",
-    "OP_TLS_ROLLBACK_BUG",
-    "OP_PKCS1_CHECK_1",
-    "OP_PKCS1_CHECK_2",
-    "OP_NETSCAPE_CA_DN_BUG",
-    "OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG",
-    "OP_NO_COMPRESSION",
-    "OP_NO_QUERY_MTU",
-    "OP_COOKIE_EXCHANGE",
-    "OP_NO_TICKET",
-    "OP_ALL",
-    "VERIFY_PEER",
-    "VERIFY_FAIL_IF_NO_PEER_CERT",
-    "VERIFY_CLIENT_ONCE",
-    "VERIFY_NONE",
-    "SESS_CACHE_OFF",
-    "SESS_CACHE_CLIENT",
-    "SESS_CACHE_SERVER",
-    "SESS_CACHE_BOTH",
-    "SESS_CACHE_NO_AUTO_CLEAR",
-    "SESS_CACHE_NO_INTERNAL_LOOKUP",
-    "SESS_CACHE_NO_INTERNAL_STORE",
-    "SESS_CACHE_NO_INTERNAL",
-    "SSL_ST_CONNECT",
-    "SSL_ST_ACCEPT",
-    "SSL_ST_MASK",
-    "SSL_CB_LOOP",
-    "SSL_CB_EXIT",
-    "SSL_CB_READ",
-    "SSL_CB_WRITE",
-    "SSL_CB_ALERT",
-    "SSL_CB_READ_ALERT",
-    "SSL_CB_WRITE_ALERT",
-    "SSL_CB_ACCEPT_LOOP",
-    "SSL_CB_ACCEPT_EXIT",
-    "SSL_CB_CONNECT_LOOP",
-    "SSL_CB_CONNECT_EXIT",
-    "SSL_CB_HANDSHAKE_START",
-    "SSL_CB_HANDSHAKE_DONE",
-    "Error",
+    "SSLeay_version",
+    "SSLv23_METHOD",
+    "Session",
+    "SysCallError",
+    "TLSv1_1_METHOD",
+    "TLSv1_2_METHOD",
+    "TLSv1_METHOD",
     "WantReadError",
     "WantWriteError",
     "WantX509LookupError",
-    "ZeroReturnError",
-    "SysCallError",
-    "NO_OVERLAPPING_PROTOCOLS",
-    "SSLeay_version",
-    "Session",
-    "Context",
-    "Connection",
     "X509VerificationCodes",
+    "ZeroReturnError",
 ]
 
 
@@ -2781,9 +2781,47 @@ class Connection:
             result.append(pycert)
         return result
 
-    def get_peer_cert_chain(self) -> list[X509] | None:
+    @staticmethod
+    def _cert_stack_to_cryptography_list(
+        cert_stack: Any,
+    ) -> list[x509.Certificate]:
+        """
+        Internal helper to convert a STACK_OF(X509) to a list of X509
+        instances.
+        """
+        result = []
+        for i in range(_lib.sk_X509_num(cert_stack)):
+            cert = _lib.sk_X509_value(cert_stack, i)
+            _openssl_assert(cert != _ffi.NULL)
+            res = _lib.X509_up_ref(cert)
+            _openssl_assert(res >= 1)
+            pycert = X509._from_raw_x509_ptr(cert)
+            result.append(pycert.to_cryptography())
+        return result
+
+    @typing.overload
+    def get_peer_cert_chain(
+        self, *, as_cryptography: typing.Literal[True]
+    ) -> list[x509.Certificate] | None:
+        pass
+
+    @typing.overload
+    def get_peer_cert_chain(
+        self, *, as_cryptography: typing.Literal[False] = False
+    ) -> list[X509] | None:
+        pass
+
+    def get_peer_cert_chain(
+        self,
+        *,
+        as_cryptography: typing.Literal[True] | typing.Literal[False] = False,
+    ) -> list[X509] | list[x509.Certificate] | None:
         """
         Retrieve the other side's certificate (if any)
+
+        :param bool as_cryptography: Controls whether a list of
+            ``cryptography.x509.Certificate`` or ``OpenSSL.crypto.X509``
+            object should be returned.
 
         :return: A list of X509 instances giving the peer's certificate chain,
                  or None if it does not have one.
@@ -2792,14 +2830,36 @@ class Connection:
         if cert_stack == _ffi.NULL:
             return None
 
+        if as_cryptography:
+            return self._cert_stack_to_cryptography_list(cert_stack)
         return self._cert_stack_to_list(cert_stack)
 
-    def get_verified_chain(self) -> list[X509] | None:
+    @typing.overload
+    def get_verified_chain(
+        self, *, as_cryptography: typing.Literal[True]
+    ) -> list[x509.Certificate] | None:
+        pass
+
+    @typing.overload
+    def get_verified_chain(
+        self, *, as_cryptography: typing.Literal[False] = False
+    ) -> list[X509] | None:
+        pass
+
+    def get_verified_chain(
+        self,
+        *,
+        as_cryptography: typing.Literal[True] | typing.Literal[False] = False,
+    ) -> list[X509] | list[x509.Certificate] | None:
         """
         Retrieve the verified certificate chain of the peer including the
         peer's end entity certificate. It must be called after a session has
         been successfully established. If peer verification was not successful
         the chain may be incomplete, invalid, or None.
+
+        :param bool as_cryptography: Controls whether a list of
+            ``cryptography.x509.Certificate`` or ``OpenSSL.crypto.X509``
+            object should be returned.
 
         :return: A list of X509 instances giving the peer's verified
                  certificate chain, or None if it does not have one.
@@ -2811,6 +2871,8 @@ class Connection:
         if cert_stack == _ffi.NULL:
             return None
 
+        if as_cryptography:
+            return self._cert_stack_to_cryptography_list(cert_stack)
         return self._cert_stack_to_list(cert_stack)
 
     def want_read(self) -> bool:
