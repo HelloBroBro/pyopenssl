@@ -27,7 +27,7 @@ jobs:
         run: python -m uv build
 
       - name: Upload distributions
-        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: pyopenssl-dists
           path: dist/
@@ -51,6 +51,6 @@ jobs:
 
       - name: publish
         if: github.event_name == 'push'
-        uses: pypa/gh-action-pypi-publish@8a08d616893759ef8e1aa1f2785787c0b97e20d6 # v1.10.0
+        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc # v1.12.2
         with:
           attestations: true
